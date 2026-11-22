@@ -14,7 +14,7 @@ A travel photo-sharing platform: upload trip photos, organize albums, and browse
 
 ## Names: `travelapp` vs. the brand
 - **`travelapp`** is the internal code name. It is used for the Python package, the Docker Compose project, service names, buckets and database names. It does not change when the product gets its public name.
-- **The brand name** (not chosen yet, planned before M4) is what users see. It lives only in the `SITE_NAME` setting and in frontend copy, logo and legal pages. Code never hard-codes it.
+- **The brand name** (not chosen yet; Claude recommends deciding before M4 deployment, see ADR-0009) is what users see. It lives only in the `SITE_NAME` setting and in frontend copy, logo and legal pages. Code never hard-codes it.
 - The GitHub repository stays `travel-app`.
 
 See [ADR-0009](docs/decisions/0009-name-domain.md).
@@ -36,7 +36,7 @@ The full planned layout, and which roadmap item creates each part, is in [`docs/
   - Windows: use WSL 2 and Docker Desktop with the WSL 2 backend; run every command below inside the WSL terminal.
   - macOS: Docker Desktop. Linux: Docker Engine + the Compose plugin.
 
-Everything else (Python, Node, PostgreSQL, Redis, MinIO) runs inside Docker, so nothing else needs to be installed.
+For now nothing else is needed: PostgreSQL, Redis, MinIO and the app itself will run inside Docker. If a later M0 item (for example pre-commit hooks) needs a tool on your machine, it adds it here.
 
 ### 2. Get the code
 ```bash

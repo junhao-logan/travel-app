@@ -1,8 +1,9 @@
 # backend
 
-Python 3.12 + FastAPI API server **and** Celery worker. Both run from the same code
-and the same Docker image, started with different commands (ADR-0003, ADR-0007):
-the worker reuses the same `services/` and `repositories/` as the API.
+Python 3.12 + FastAPI API server **and** Celery worker/beat (ADR-0003). They share one
+codebase and one Docker image, started with different commands (API, worker, beat),
+so the worker reuses the same `services/` and `repositories/` as the API.
+(One image for all three was decided in the M0 directory-structure plan, not in an ADR.)
 
 > Status: placeholder. Filled in by the M0 roadmap item "后端骨架" (backend skeleton).
 > See [`docs/roadmap.md`](../docs/roadmap.md).
