@@ -14,6 +14,7 @@
 | 前端 | Next.js + React + TypeScript (strict)，自托管，只负责渲染（ADR-0006） | 【已定】 |
 | 前后端类型对齐 | 根据 FastAPI 的 OpenAPI 自动生成 TS client | 【已定】 |
 | 开发环境 | WSL + Docker Compose | 【已定】 |
+| 事务邮件 | Beta 期 Resend 免费档 → 量大后 AWS SES，统一经 `core/email.py` 发送（ADR-0008） | 【已定】 |
 | 部署 | 分阶段：Beta 单台 VPS + Docker Compose → 成长期 Render → 大规模 AWS（ADR-0007） | 【已定】 |
 | 代码质量 | ruff、mypy (strict)、pytest；ESLint、Prettier；pre-commit | 【已定】 |
 | CI | GitHub Actions（lint + 类型检查 + 测试 + 依赖扫描） | 【已定】 |
