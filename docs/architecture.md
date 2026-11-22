@@ -11,7 +11,7 @@
 | 对象存储 | 本地 MinIO；线上 Cloudflare R2（均为 S3 兼容 API，见 ADR-0005） | 【已定】 |
 | 异步任务 | Celery（ADR-0003） | 【已定】 |
 | 认证 | 服务端 session（Redis）+ httpOnly cookie（ADR-0004） | 【已定】 |
-| 前端 | React + TypeScript (strict)；Vite 还是 Next.js 见 ADR-0006 | 【建议】 |
+| 前端 | Next.js + React + TypeScript (strict)，自托管，只负责渲染（ADR-0006） | 【已定】 |
 | 前后端类型对齐 | 根据 FastAPI 的 OpenAPI 自动生成 TS client | 【已定】 |
 | 开发环境 | WSL + Docker Compose | 【已定】 |
 | 代码质量 | ruff、mypy (strict)、pytest；ESLint、Prettier；pre-commit | 【已定】 |
