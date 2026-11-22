@@ -8,14 +8,14 @@
 | 后端 | Python 3.12 + FastAPI | 【已定】 |
 | 数据库 | PostgreSQL 16 + SQLAlchemy 2.0 + Alembic | 【已定】 |
 | 缓存 / 队列中间件 | Redis | 【已定】 |
-| 对象存储 | 本地 MinIO；线上 Cloudflare R2（均为 S3 兼容 API，见 ADR-0005） | 【已定】 |
+| 对象存储 | 本地 MinIO；线上 Cloudflare R2；统一用 boto3（S3 标准 API）访问（ADR-0005） | 【已定】 |
 | 异步任务 | Celery（ADR-0003） | 【已定】 |
 | 认证 | 服务端 session（Redis）+ httpOnly cookie（ADR-0004） | 【已定】 |
 | 前端 | Next.js + React + TypeScript (strict)，自托管，只负责渲染（ADR-0006） | 【已定】 |
 | 前后端类型对齐 | 根据 FastAPI 的 OpenAPI 自动生成 TS client | 【已定】 |
 | 开发环境 | WSL + Docker Compose | 【已定】 |
 | 事务邮件 | Beta 期 Resend 免费档 → 量大后 AWS SES，统一经 `core/email.py` 发送（ADR-0008） | 【已定】 |
-| 部署 | 分阶段：Beta 单台 VPS + Docker Compose → 成长期 Render → 大规模 AWS（ADR-0007） | 【已定】 |
+| 部署 | 分阶段：Beta 单台 VPS + Docker Compose + Caddy（反向代理、自动 HTTPS）→ 成长期 Render → 大规模 AWS（ADR-0007）；镜像仓库在 M4 方案中确定 | 【已定】 |
 | 代码质量 | ruff、mypy (strict)、pytest；ESLint、Prettier；pre-commit | 【已定】 |
 | CI | GitHub Actions（lint + 类型检查 + 测试 + 依赖扫描） | 【已定】 |
 
@@ -26,7 +26,7 @@ services/      → 业务逻辑和权限判断。
 repositories/  → 唯一可以执行数据库查询的地方。
 models/        → SQLAlchemy ORM 模型。
 schemas/       → Pydantic 请求/响应模型（不直接返回 ORM 对象）。
-core/          → 配置、日志、安全、异常、依赖注入。
+core/          → 配置、日志、安全、异常、依赖注入；对象存储封装（storage.py，ADR-0005）、邮件封装（email.py，ADR-0008）。
 workers/       → 异步任务。
 ```
 
@@ -45,7 +45,8 @@ workers/       → 异步任务。
 
 ## 4. 存储原则
 - 数据库只存元数据：对象存储的 key、尺寸、状态、所属用户。不存图片本体。
-- bucket 私有，对外访问走 CDN 或带签名的 URL。
+- bucket 私有，对外访问走 CDN 或带签名的 URL。未处理的原图和私有照片只能用签名 URL 访问，只有公开且 ready 的衍生图可以走公开 CDN（见 ADR-0005 访问控制约定）。
+- 数据库备份放在单独的私有 bucket（见 ADR-0007）。
 - 对象 key 用随机 UUID，不用用户上传的文件名。
 
 ## 5. 安全
