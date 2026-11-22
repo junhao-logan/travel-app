@@ -93,4 +93,4 @@
 | 日期 | 完成内容 | PR | 备注 |
 |---|---|---|---|
 | 2026-11-22 | 确定 ADR-0003～0009 | [#1](https://github.com/junhao-logan/travel-app/pull/1) | Celery、服务端 session、R2、Next.js、分阶段托管、Resend→SES、代码名 travelapp；品牌名待定（建议 M4 前） |
-| 2026-11-22 | 目录结构、`.env.example`、README 启动说明 | PR_PLACEHOLDER | src 布局（`backend/src/travelapp`）；`.env.example` 只列代码读取的变量、标准变量名不加前缀；目标目录树见 architecture.md 第 8 节 |
+| 2026-11-22 | 目录结构、`.env.example`、README 启动说明 | [#2](https://github.com/junhao-logan/travel-app/pull/2) | src 布局（`backend/src/travelapp`）；`.env.example` 只列代码读取的变量、标准变量名不加前缀；目标目录树见 architecture.md 第 8 节 |
