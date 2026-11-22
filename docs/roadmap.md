@@ -58,7 +58,7 @@
 **验收**：私有相册无论通过什么接口都访问不到（有测试覆盖）。
 
 ### M4 部署上线
-- [ ] 按 ADR-0007 部署（Beta 期单台 VPS）；确定品牌名、注册并配置域名（ADR-0009）
+- [ ] 按 ADR-0007 部署（Beta 期单台 VPS）；确定品牌名（Claude 建议在此之前定）、注册并配置域名（ADR-0009）
 - [ ] 线上数据库、对象存储、CDN；图片自定义域名，按 ADR-0005 访问控制约定区分公开 / 私有路径
 - [ ] VPS 加固（ADR-0007）：自动安全更新、云防火墙、只开 80/443 和 SSH 密钥登录、postgres/redis 不暴露端口、外部端口扫描验证
 - [ ] 线上发信配置（ADR-0008）：Resend 账号、发件域名的 SPF / DKIM / DMARC
@@ -92,4 +92,4 @@
 ## 完成记录
 | 日期 | 完成内容 | PR | 备注 |
 |---|---|---|---|
-| 2026-11-22 | 确定 ADR-0003～0009 | [#1](https://github.com/junhao-logan/travel-app/pull/1) | Celery、服务端 session、R2、Next.js、分阶段托管、Resend→SES、代码名 travelapp；品牌名 M4 前定 |
+| 2026-11-22 | 确定 ADR-0003～0009 | [#1](https://github.com/junhao-logan/travel-app/pull/1) | Celery、服务端 session、R2、Next.js、分阶段托管、Resend→SES、代码名 travelapp；品牌名待定（建议 M4 前） |

@@ -19,4 +19,5 @@
   - 定时任务需要额外运行 Celery Beat 进程。
 - 核实记录（2026-11-22）：Celery 5.7.0 于 2026-11-05 发布（https://pypi.org/project/celery/）；ARQ 0.28.0 于 2026-04-16 发布，README 标注只维护（https://github.com/python-arq/arq）；Dramatiq 2.2.1、Taskiq 0.13.0（PyPI）。
 - 安全（M0 实现时落实）：Celery 只接受 JSON 序列化（`task_serializer`、`accept_content` 只允许 json，禁止 pickle）；Redis 不暴露到公网（见 ADR-0007）。
+- 要换的话需要改哪些地方：任务定义集中在 `workers/`，业务代码只通过一个薄的入队函数投递任务、不直接 import Celery API；换框架时只改 `workers/` 和 Celery 配置模块。
 - 以后什么情况下重新评估：任务量大到需要复杂路由或多语言 worker，或 Celery 停止维护时，写新 ADR。
