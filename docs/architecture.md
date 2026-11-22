@@ -9,7 +9,7 @@
 | 数据库 | PostgreSQL 16 + SQLAlchemy 2.0 + Alembic | 【已定】 |
 | 缓存 / 队列中间件 | Redis | 【已定】 |
 | 对象存储 | 本地 MinIO（S3 兼容）；线上见 ADR-0005 | 【建议】 |
-| 异步任务 | 见 ADR-0003（Celery / ARQ） | 【建议】 |
+| 异步任务 | Celery（ADR-0003） | 【已定】 |
 | 前端 | React + TypeScript (strict)；Vite 还是 Next.js 见 ADR-0006 | 【建议】 |
 | 前后端类型对齐 | 根据 FastAPI 的 OpenAPI 自动生成 TS client | 【已定】 |
 | 开发环境 | WSL + Docker Compose | 【已定】 |
