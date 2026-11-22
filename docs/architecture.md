@@ -68,3 +68,39 @@ workers/       → 异步任务。
 - ID：对外暴露 UUID，不暴露自增 ID
 - 日志：结构化 JSON，每个请求带 request_id
 - 配置：pydantic-settings 从环境变量读取；`.env.example` 列出所有变量
+  - 【已定】只列代码实际读取的变量；新功能需要新变量时，在同一个 PR 里加进 `.env.example`，不提前列"以后可能用到"的变量
+  - 【已定】变量名用行业标准名、不加前缀（如 `DATABASE_URL`、`REDIS_URL`），托管平台注入时不用改名（ADR-0007）
+  - 【已定】`.env.example` 里只放本地开发用的占位密码；生产环境的密码和密钥另外生成，只存在服务器上
+  - 【已定】配置里品牌名只出现在 `SITE_NAME`；代码其他地方不硬编码品牌名（ADR-0009）
+
+## 8. 目录结构（【已定】，M0 目录结构方案，Logan 于 2026-11-22 确认）
+单仓库（monorepo）：前后端在同一个仓库，一个 PR 可以同时改接口和页面。代码中统一使用内部代号 `travelapp`（ADR-0009）。
+
+```
+travel-app/
+├── backend/               FastAPI + Celery worker / beat：同一份代码、同一个镜像、三种启动命令（API、worker、beat）
+│   ├── src/travelapp/     Python 包（src 布局：测试 import 的是安装后的包，和镜像里的代码一致）
+│   │   └── api/ services/ repositories/ models/ schemas/ core/ workers/   （分层见第 2 节）
+│   ├── tests/
+│   └── migrations/        Alembic
+├── frontend/              Next.js（ADR-0006）
+├── infra/                 生产部署配置：Caddyfile、生产 compose 等（ADR-0007）
+├── scripts/               开发脚本，如根据 OpenAPI 生成 TS client
+├── docs/
+├── compose.yaml           本地开发：一条命令启动全部服务
+├── .env.example
+└── README.md
+```
+
+各部分由 roadmap 中哪一项创建：
+| 路径 | 创建于 |
+|---|---|
+| `backend/`、`frontend/`（占位说明）、`.env.example`、README 启动说明 | M0 目录结构 |
+| `compose.yaml` | M0 Docker Compose |
+| `backend/src/travelapp/` 分层目录、`backend/tests/` | M0 后端骨架 |
+| `backend/migrations/` | M0 Alembic 初始化 |
+| `frontend/` 内的 Next.js 项目 | M0 前端骨架 |
+| `scripts/` | M0 生成 TS client 的脚本 |
+| `infra/` | M4 部署上线 |
+
+目录在需要它的那一项里才创建，不提前建空目录。

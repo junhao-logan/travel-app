@@ -4,8 +4,8 @@
 
 ## 当前位置
 - 阶段：v1
-- 里程碑：M0 基建（进行中：ADR-0003～0009 已全部确定）
-- 下一步：搭仓库骨架，从"目录结构、`.env.example`、README 中的启动说明"开始（内部代号 `travelapp`，见 ADR-0009）
+- 里程碑：M0 基建（进行中：ADR 已全部确定；目录结构、`.env.example`、README 启动说明已完成）
+- 下一步：Docker Compose，一条命令启动 postgres、redis、minio、backend、worker、beat、frontend（读取根目录 `.env`，变量见 `.env.example`）
 
 ---
 
@@ -13,7 +13,7 @@
 
 ### M0 基建（不写任何业务功能）
 - [x] 确定所有"待定"的 ADR（0003–0009）
-- [ ] 目录结构、`.env.example`、README 中的启动说明（含内部代号 `travelapp` 与品牌名的区别，ADR-0009）
+- [x] 目录结构、`.env.example`、README 中的启动说明（含内部代号 `travelapp` 与品牌名的区别，ADR-0009）
 - [ ] Docker Compose：postgres、redis、minio、backend、worker、beat、frontend，一条命令启动
 - [ ] 后端骨架：分层目录、pydantic-settings、结构化日志、统一错误处理、request_id
 - [ ] `GET /health`：检查数据库、Redis、对象存储的连通性
@@ -93,3 +93,4 @@
 | 日期 | 完成内容 | PR | 备注 |
 |---|---|---|---|
 | 2026-11-22 | 确定 ADR-0003～0009 | [#1](https://github.com/junhao-logan/travel-app/pull/1) | Celery、服务端 session、R2、Next.js、分阶段托管、Resend→SES、代码名 travelapp；品牌名待定（建议 M4 前） |
+| 2026-11-22 | 目录结构、`.env.example`、README 启动说明 | [#2](https://github.com/junhao-logan/travel-app/pull/2) | src 布局（`backend/src/travelapp`）；`.env.example` 只列代码读取的变量、标准变量名不加前缀；目标目录树见 architecture.md 第 8 节 |
