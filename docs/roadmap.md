@@ -4,17 +4,17 @@
 
 ## 当前位置
 - 阶段：v1
-- 里程碑：M0 基建（未开始）
-- 下一步：逐条讨论并确定 ADR-0003 ~ ADR-0009（状态为"待定"的那些），然后搭仓库骨架
+- 里程碑：M0 基建（进行中：ADR-0003～0009 已全部确定）
+- 下一步：搭仓库骨架，从"目录结构、`.env.example`、README 中的启动说明"开始（内部代号 `travelapp`，见 ADR-0009）
 
 ---
 
 ## v1：照片分享
 
 ### M0 基建（不写任何业务功能）
-- [ ] 确定所有"待定"的 ADR（0003–0009）
-- [ ] 目录结构、`.env.example`、README 中的启动说明
-- [ ] Docker Compose：postgres、redis、minio、backend、worker，一条命令启动
+- [x] 确定所有"待定"的 ADR（0003–0009）
+- [ ] 目录结构、`.env.example`、README 中的启动说明（含内部代号 `travelapp` 与品牌名的区别，ADR-0009）
+- [ ] Docker Compose：postgres、redis、minio、backend、worker、beat、frontend，一条命令启动
 - [ ] 后端骨架：分层目录、pydantic-settings、结构化日志、统一错误处理、request_id
 - [ ] `GET /health`：检查数据库、Redis、对象存储的连通性
 - [ ] Alembic 初始化，跑通第一个空迁移
@@ -22,7 +22,7 @@
 - [ ] 测试基建：独立测试数据库，每个测试自动回滚
 - [ ] GitHub Actions CI：lint、类型检查、测试、依赖扫描
 - [ ] GitHub 上 `main` 分支开启保护：必须走 PR，CI 通过才能合并
-- [ ] 前端骨架：React + TS strict + ESLint/Prettier，能调用 `/health`，移动端布局基础
+- [ ] 前端骨架：Next.js + React + TS strict + ESLint/Prettier（ADR-0006），能调用 `/health`，移动端布局基础
 - [ ] 根据 OpenAPI 生成 TS client 的脚本
 - [ ] 补全 `CLAUDE.md` 的"常用命令"
 
@@ -41,7 +41,7 @@
 
 ### M2 照片上传
 - [ ] photos 表（状态机：pending → processing → ready / failed）
-- [ ] presigned URL 上传流程
+- [ ] presigned URL 上传流程（验证 R2 上 presigned URL 能限制大小和 content-type，ADR-0005）
 - [ ] worker：magic bytes 校验、HEIC 转码、清除 EXIF、缩略图和 WebP
 - [ ] 失败处理与重试；清理长期 pending 的记录和残留文件
 - [ ] 单用户存储配额、上传频率限制
@@ -58,18 +58,21 @@
 **验收**：私有相册无论通过什么接口都访问不到（有测试覆盖）。
 
 ### M4 部署上线
-- [ ] 按 ADR-0007 部署；配置域名（ADR-0009）
-- [ ] 线上数据库、对象存储、CDN
+- [ ] 按 ADR-0007 部署（Beta 期单台 VPS）；确定品牌名（Claude 建议在此之前定）、注册并配置域名（ADR-0009）
+- [ ] 线上数据库、对象存储、CDN；图片自定义域名，按 ADR-0005 访问控制约定区分公开 / 私有路径
+- [ ] VPS 加固（ADR-0007）：自动安全更新、云防火墙、只开 80/443 和 SSH 密钥登录、postgres/redis 不暴露端口、外部端口扫描验证
+- [ ] 线上发信配置（ADR-0008）：Resend 账号、发件域名的 SPF / DKIM / DMARC
+- [ ] 运维手册：启动、部署、备份、恢复、换服务器步骤（ADR-0007）
 - [ ] CI 通过后自动部署
 - [ ] 错误追踪、可用性监控
-- [ ] 数据库自动备份 + 演练一次恢复
+- [ ] 数据库每日自动备份到 R2 + 演练一次恢复（ADR-0007）；确定 R2 删除保护方案（ADR-0005）
 - [ ] 云服务费用告警
 
 **验收**：有公开域名可访问；完成一次从备份恢复的演练。
 
 ### M5 公开发布准备（完成后才对陌生人开放注册）
 - [ ] 举报功能 + 管理员后台（下架内容、封禁账号）
-- [ ] 服务条款、隐私政策、版权投诉页面
+- [ ] 服务条款、隐私政策（列出第三方数据处理方：Cloudflare、Resend、VPS 服务商、错误追踪服务等；写明删除和备份的保留期）、版权投诉页面
 - [ ] 数据导出
 - [ ] 分享链接预览（Open Graph 标签）
 - [ ] 找 5–10 个朋友真实使用一周，收集反馈并修复问题
@@ -89,3 +92,4 @@
 ## 完成记录
 | 日期 | 完成内容 | PR | 备注 |
 |---|---|---|---|
+| 2026-11-22 | 确定 ADR-0003～0009 | [#1](https://github.com/junhao-logan/travel-app/pull/1) | Celery、服务端 session、R2、Next.js、分阶段托管、Resend→SES、代码名 travelapp；品牌名待定（建议 M4 前） |

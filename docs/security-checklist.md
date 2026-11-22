@@ -5,6 +5,8 @@
 ## 认证与会话
 - [ ] 密码用 argon2 哈希，不记录明文、不写进日志
 - [ ] 会话方案按 ADR-0004；cookie 设置 httpOnly、Secure、SameSite
+- [ ] 会改数据的请求有 CSRF 防护（SameSite + CSRF token），并有测试
+- [ ] 私有内容不经过公开 CDN 路径、不被 CDN 缓存（见 ADR-0005 访问控制约定）
 - [ ] 登录、注册、找回密码接口限流；错误提示不能暴露账号是否存在
 
 ## 授权
